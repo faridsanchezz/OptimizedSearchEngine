@@ -15,13 +15,18 @@ import java.util.concurrent.ForkJoinPool;
 
 public class WordStoreFilePerWord implements WordStoreManager {
 	private final WordSerializerManager wordSerializer;
-	private final File datamartDirectory;
-	private final Set<String> lockedDocuments = ConcurrentHashMap.newKeySet(); //TODO: ¿para que sirve esta variable?
+	private File wordsDatamartDirectory;
+	private final Set<String> lockedDocuments = ConcurrentHashMap.newKeySet();
 
-	public WordStoreFilePerWord(String datamartDirectory, WordSerializerManager wordSerializer) throws IOException {
+	public WordStoreFilePerWord(String generaldatamartDirectory, WordSerializerManager wordSerializer) throws IOException {
 		this.wordSerializer = wordSerializer;
-		this.datamartDirectory = Paths.get(datamartDirectory, "words").toFile();
-		DirectoryManager.createDirectory(this.datamartDirectory);
+		createWordDatamartDirectory(generaldatamartDirectory);
+	}
+
+	private void createWordDatamartDirectory(String generalDatamartDirectory){
+		this.wordsDatamartDirectory = new File(generalDatamartDirectory, "words");
+		if (!this.wordsDatamartDirectory.exists()) {this.wordsDatamartDirectory.mkdirs();}
+
 	}
 
 	@Override
@@ -30,7 +35,7 @@ public class WordStoreFilePerWord implements WordStoreManager {
 		ForkJoinPool forkJoinPool = new ForkJoinPool();
 		for (Word newWord : newWordSet) {
 			forkJoinPool.submit(() -> {
-				File datamartFilePath = new File(this.datamartDirectory, newWord.getText());
+				File datamartFilePath = new File(this.wordsDatamartDirectory, newWord.getText());
 				String filePath = datamartFilePath.getAbsolutePath();
 
 				if (!lockedDocuments.add(filePath)) {
