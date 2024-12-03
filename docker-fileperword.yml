@@ -1,0 +1,59 @@
+services:
+  indexer:
+    build:
+      context: ./Indexer
+      dockerfile: DockerfileIndexer
+    image: searchoracle/indexer_file_per_word
+    container_name: indexer
+    volumes:
+      - datalake:/app/datalake/
+      - datamart:/app/datamart/
+    environment:
+      - DATALAKE_PATH=/app/datalake/
+      - DATAMART_PATH=/app/datamart/
+
+  crawler:
+    build:
+      context: ./Crawler
+      dockerfile: DockerFileCrawler
+    image: searchoracle/crawler
+    container_name: crawler
+    depends_on:
+      - indexer
+    volumes:
+      - datalake:/app/datalake/
+    environment:
+      - JAVA_OPTS=-Xmx512m
+
+  query_engine:
+    build:
+      context: ./Query_Engine
+      dockerfile: DockerfileQueryEngine
+    image: searchoracle/query_engine_file_per_word
+    container_name: query_engine
+    depends_on:
+      - crawler
+    volumes:
+      - datalake:/app/datalake/
+      - datamart:/app/datamart/
+    environment:
+      - DATALAKE_PATH=/app/datalake/
+      - DATAMART_PATH=/app/datamart/
+    ports:
+      - "8080:8080"
+
+  user_interface:
+    build:
+      context: ./User_Interface
+      dockerfile: DockerfileUserInterface
+    image: searchoracle/user_interface
+    container_name: user_interface
+    depends_on:
+      - query_engine
+    ports:
+      - "3000:80"
+
+
+volumes:
+  datalake:
+  datamart:

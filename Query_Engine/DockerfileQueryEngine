@@ -1,0 +1,17 @@
+FROM openjdk:17-jdk-alpine
+
+WORKDIR /app
+
+COPY target/Query_Engine-1.0-SNAPSHOT.jar /app/query-engine.jar
+
+EXPOSE 8080
+
+ENV DATALAKE_PATH=/app/datalake/
+ENV DATAMART_PATH=/app/datamart/
+
+RUN mkdir -p /app/datalake/ /app/datamart/
+
+VOLUME /app/datalake/
+VOLUME /app/datamart/
+
+ENTRYPOINT ["java", "-jar", "/app/query-engine.jar"]
