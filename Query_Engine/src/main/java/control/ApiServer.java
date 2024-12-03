@@ -10,23 +10,7 @@ public class ApiServer {
 
 	private static final Gson gson = new Gson();
 
-	public static void main(String[] args) { //TODO: crear un fichero MAIN para inicializar todo
-
-		port(8080);
-		enableCORS("*", "GET,POST,OPTIONS", "Content-Type,Authorization");
-
-		// Paths for Docker
-		String WORDS_DATAMART_PATH_FilePerWord = "/app/datamart/words/";
-		String DATALAKE_PATH_FilePerWord = "/app/datalake/";
-		String METADATA_FILE_PATH_FilePerWord = "/app/datamart/metadata/metadata";
-
-		QueryEngineFilePerWord queryEngineFilePerWord = new QueryEngineFilePerWord(METADATA_FILE_PATH_FilePerWord);
-		BookController bookController = new BookController(WORDS_DATAMART_PATH_FilePerWord, DATALAKE_PATH_FilePerWord, METADATA_FILE_PATH_FilePerWord, queryEngineFilePerWord);
-
-		configureRoutes(bookController);
-	}
-
-	private static void configureRoutes(BookController bookController) {
+	public static void configureRoutes(BookController bookController) {
 		get("/search", (req, res) -> {
 			String phrase = req.queryParams("phrase");
 
@@ -52,7 +36,7 @@ public class ApiServer {
 		});
 	}
 
-	private static void enableCORS(final String origin, final String methods, final String headers) {
+	public static void enableCORS(final String origin, final String methods, final String headers) {
 		before((request, response) -> {
 			response.header("Access-Control-Allow-Origin", origin);
 			response.header("Access-Control-Allow-Methods", methods);
