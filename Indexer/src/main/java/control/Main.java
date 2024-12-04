@@ -18,8 +18,8 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		// Paths for Docker
-		String datamartDirectory = DirectoryManager.createDatamartDirectory("/Users/faridsanchez/Desktop/searchOrcale_TEST");
-		String datalakeDirectory = DirectoryManager.createDatalakeDirectory("/Users/faridsanchez/Desktop/searchOrcale_TEST");
+		String datamartDirectory = DirectoryManager.createDatamartDirectory("");
+		String datalakeDirectory = DirectoryManager.createDatalakeDirectory("");
 
 		WordCleanerManager wordCleaner = new WordCleaner();
 
