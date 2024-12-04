@@ -2,15 +2,12 @@ package control;
 
 import control.interfaces.*;
 import control.metadata.MetadataExtractor;
-import control.metadata.MetadataSerializer;
-import control.metadata.MetadataStoreOneFile;
 import control.metadata.MetadataStoreSqlite;
 import control.word.WordCleaner;
 import control.word.WordExtractor;
 import control.word.WordSerializerFilePerWord;
 import control.word.WordStoreMultipleDirectories;
 
-import java.io.File;
 import java.io.IOException;
 
 

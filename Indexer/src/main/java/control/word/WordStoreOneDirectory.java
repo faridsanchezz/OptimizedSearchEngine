@@ -7,7 +7,6 @@ import model.Word;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
@@ -15,17 +14,19 @@ import java.util.concurrent.ForkJoinPool;
 
 public class WordStoreOneDirectory implements WordStoreManager {
 	private final WordSerializerManager wordSerializer;
-	private File wordsDatamartDirectory;
 	private final Set<String> lockedDocuments = ConcurrentHashMap.newKeySet();
+	private File wordsDatamartDirectory;
 
 	public WordStoreOneDirectory(String generaldatamartDirectory, WordSerializerManager wordSerializer) throws IOException {
 		this.wordSerializer = wordSerializer;
 		createWordDatamartDirectory(generaldatamartDirectory);
 	}
 
-	private void createWordDatamartDirectory(String generalDatamartDirectory){
+	private void createWordDatamartDirectory(String generalDatamartDirectory) {
 		this.wordsDatamartDirectory = new File(generalDatamartDirectory, "words");
-		if (!this.wordsDatamartDirectory.exists()) {this.wordsDatamartDirectory.mkdirs();}
+		if (!this.wordsDatamartDirectory.exists()) {
+			this.wordsDatamartDirectory.mkdirs();
+		}
 
 	}
 

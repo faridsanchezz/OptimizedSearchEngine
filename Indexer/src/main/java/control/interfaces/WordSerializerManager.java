@@ -1,6 +1,5 @@
 package control.interfaces;
 
-import model.Metadata;
 import model.Word;
 
 import java.io.File;

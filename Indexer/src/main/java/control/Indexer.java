@@ -1,8 +1,12 @@
 package control;
 
 
-import control.interfaces.*;
-import model.*;
+import control.interfaces.MetadataExtractorManager;
+import control.interfaces.MetadataStoreManager;
+import control.interfaces.WordExtractorManager;
+import control.interfaces.WordStoreManager;
+import model.Metadata;
+import model.Word;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -32,7 +36,7 @@ public class Indexer {
 
 		try (BufferedReader book = new BufferedReader(new FileReader(bookDatalakePath.toFile()))) {
 			book.mark(5 * 1024 * 1024);
-			metadata= metadataExtractor.getMetadata(book, bookDatalakePath.getFileName().toString());
+			metadata = metadataExtractor.getMetadata(book, bookDatalakePath.getFileName().toString());
 			metadataStoreManager.update(metadata);
 			book.reset();
 			wordSet = wordExtractor.getWords(book, metadata.getBookID());

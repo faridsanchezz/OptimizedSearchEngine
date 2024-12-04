@@ -4,11 +4,7 @@ import control.interfaces.MetadataStoreManager;
 import model.Metadata;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class MetadataStoreSqlite implements MetadataStoreManager {
 
@@ -24,9 +20,11 @@ public class MetadataStoreSqlite implements MetadataStoreManager {
 		createTable();
 	}
 
-	private String createMetadataDatamartDirectory(String generalDatamartDirectory){
+	private String createMetadataDatamartDirectory(String generalDatamartDirectory) {
 		File metadataDatamartDirectory = new File(generalDatamartDirectory, "metadata");
-		if (!metadataDatamartDirectory.exists()) {metadataDatamartDirectory.mkdirs();}
+		if (!metadataDatamartDirectory.exists()) {
+			metadataDatamartDirectory.mkdirs();
+		}
 		return metadataDatamartDirectory.toString();
 	}
 
@@ -42,15 +40,15 @@ public class MetadataStoreSqlite implements MetadataStoreManager {
 
 	private void createTable() {
 		String sql = """
-                CREATE TABLE IF NOT EXISTS Metadata (
-                    bookID TEXT PRIMARY KEY,
-                    name TEXT NOT NULL,
-                    author TEXT NOT NULL,
-                    year INTEGER NOT NULL,
-                    language TEXT NOT NULL,
-                    downloadLink TEXT NOT NULL
-                );
-                """;
+				CREATE TABLE IF NOT EXISTS Metadata (
+				    bookID TEXT PRIMARY KEY,
+				    name TEXT NOT NULL,
+				    author TEXT NOT NULL,
+				    year INTEGER NOT NULL,
+				    language TEXT NOT NULL,
+				    downloadLink TEXT NOT NULL
+				);
+				""";
 
 		try (Connection conn = DriverManager.getConnection(databaseUrl);
 			 Statement stmt = conn.createStatement()) {
@@ -63,10 +61,10 @@ public class MetadataStoreSqlite implements MetadataStoreManager {
 	@Override
 	public void update(Metadata metadata) {
 		String sql = """
-                INSERT INTO Metadata (bookID, name, author, year, language, downloadLink)
-                VALUES (?, ?, ?, ?, ?, ?)
-                ON CONFLICT(bookID) DO NOTHING;
-                """;
+				INSERT INTO Metadata (bookID, name, author, year, language, downloadLink)
+				VALUES (?, ?, ?, ?, ?, ?)
+				ON CONFLICT(bookID) DO NOTHING;
+				""";
 
 		try (Connection conn = DriverManager.getConnection(databaseUrl);
 			 PreparedStatement pstmt = conn.prepareStatement(sql)) {

@@ -16,21 +16,25 @@ import java.util.concurrent.ForkJoinPool;
 
 public class WordStoreMultipleDirectories implements WordStoreManager {
 	private final WordSerializerManager wordSerializer;
-	private File wordsDatamartDirectory;
 	private final Set<String> lockedDocuments = ConcurrentHashMap.newKeySet();
+	private File wordsDatamartDirectory;
 
 	public WordStoreMultipleDirectories(String generaldatamartDirectory, WordSerializerManager wordSerializer) throws IOException {
 		this.wordSerializer = wordSerializer;
 		createWordDatamartDirectory(generaldatamartDirectory);
 	}
 
-	private void createWordDatamartDirectory(String generalDatamartDirectory){
+	private void createWordDatamartDirectory(String generalDatamartDirectory) {
 		this.wordsDatamartDirectory = new File(generalDatamartDirectory, "words");
-		if (!this.wordsDatamartDirectory.exists()) {this.wordsDatamartDirectory.mkdirs();}
+		if (!this.wordsDatamartDirectory.exists()) {
+			this.wordsDatamartDirectory.mkdirs();
+		}
 
 		for (char letter = 'a'; letter <= 'z'; letter++) {
 			File subdirectory = new File(this.wordsDatamartDirectory, String.valueOf(letter));
-			if (!subdirectory.exists()) {subdirectory.mkdirs();}
+			if (!subdirectory.exists()) {
+				subdirectory.mkdirs();
+			}
 		}
 	}
 

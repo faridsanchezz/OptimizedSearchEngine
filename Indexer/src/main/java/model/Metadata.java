@@ -1,9 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Metadata {
 
 	private final String bookID;
@@ -27,7 +23,7 @@ public class Metadata {
 	}
 
 	public String[] toList() {
-		return new String[] {bookID, name, author, year, language, downloadLink};
+		return new String[]{bookID, name, author, year, language, downloadLink};
 	}
 
 }

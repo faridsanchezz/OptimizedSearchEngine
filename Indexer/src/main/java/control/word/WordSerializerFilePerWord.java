@@ -4,7 +4,10 @@ package control.word;
 import control.interfaces.WordSerializerManager;
 import model.Word;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Set;
 
 public class WordSerializerFilePerWord implements WordSerializerManager {

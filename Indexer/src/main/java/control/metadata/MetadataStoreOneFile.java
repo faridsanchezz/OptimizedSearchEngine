@@ -6,7 +6,6 @@ import model.Metadata;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 public class MetadataStoreOneFile implements MetadataStoreManager {
 	private final File datamartFilePath;
@@ -17,9 +16,11 @@ public class MetadataStoreOneFile implements MetadataStoreManager {
 		this.datamartFilePath = createMetadataDatamartDirectory(generalDatamartDirectory);
 	}
 
-	private File createMetadataDatamartDirectory(String generalDatamartDirectory){
+	private File createMetadataDatamartDirectory(String generalDatamartDirectory) {
 		File metadataDatamartDirectory = new File(generalDatamartDirectory, "metadata"); // create subfolder path inside datamart
-		if (!metadataDatamartDirectory.exists()) {metadataDatamartDirectory.mkdirs();}
+		if (!metadataDatamartDirectory.exists()) {
+			metadataDatamartDirectory.mkdirs();
+		}
 		return new File(metadataDatamartDirectory, "metadata"); // Create a file path inside the subfolder that was previously created
 	}
 

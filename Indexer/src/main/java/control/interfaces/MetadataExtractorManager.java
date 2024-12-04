@@ -2,7 +2,6 @@ package control.interfaces;
 
 import model.Metadata;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 
