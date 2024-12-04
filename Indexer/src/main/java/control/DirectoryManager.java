@@ -7,17 +7,22 @@ import java.nio.file.Path;
 
 public class DirectoryManager {
 
-	public static void createDirectory(File directory) {
-		Path directoryPath = directory.toPath();
-		try {
-			if (Files.notExists(directoryPath)) {
-				Files.createDirectories(directoryPath);
-				System.out.println("Directory created: " + directoryPath);
-			}
-		} catch (IOException e) {
-			System.out.println("Error creating directory or file: " + e.getMessage());
-			e.printStackTrace();
+	public static String createDatamartDirectory(String directory) {
+		File datamartDirectory = new File(directory, "datamart");
+		if (!datamartDirectory.exists()) {
+			datamartDirectory.mkdirs();
+			System.out.println("Directory created: " + datamartDirectory);
 		}
+		return datamartDirectory.toString();
+	}
+
+	public static String createDatalakeDirectory(String directory) {
+		File datalakeDirectory = new File(directory, "datalake");
+		if (!datalakeDirectory.exists()) {
+			datalakeDirectory.mkdirs();
+			System.out.println("Directory created: " + datalakeDirectory);
+		}
+		return datalakeDirectory.toString();
 	}
 }
 
