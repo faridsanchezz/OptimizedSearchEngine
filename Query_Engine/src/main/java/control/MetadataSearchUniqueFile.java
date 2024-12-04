@@ -6,14 +6,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public class MetadataReader {
+public class MetadataSearchUniqueFile {
 
-	public static Set<Metadata> readMetadata(String filePath) {
+	public static Set<Metadata> MetadataSearchUniqueFile(String filePath) {
 		Set<Metadata> metadataSet = new HashSet<>();
 
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {

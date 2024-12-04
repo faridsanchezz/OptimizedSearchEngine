@@ -12,14 +12,14 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static control.MetadataReader.readMetadata;
+import static control.MetadataSearchUniqueFile.readMetadata;
 
 
-public class QueryEngineFilePerWord implements QueryEngineManager {
+public class QueryEngine implements QueryEngineManager {
 
 	private Set<Metadata> metadataSet;
 
-	public QueryEngineFilePerWord(String metadataFilePath) {
+	public QueryEngine(String metadataFilePath) {
 
 		this.metadataSet = readMetadata(metadataFilePath);
 	}
