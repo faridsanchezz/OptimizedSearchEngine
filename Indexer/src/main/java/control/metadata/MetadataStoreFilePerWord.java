@@ -1,5 +1,6 @@
-package control;
+package control.metadata;
 
+import control.DirectoryManager;
 import control.interfaces.MetadataSerializerManager;
 import control.interfaces.MetadataStoreManager;
 import model.Metadata;

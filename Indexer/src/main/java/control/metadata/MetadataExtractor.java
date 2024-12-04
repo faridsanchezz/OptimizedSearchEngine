@@ -1,4 +1,4 @@
-package control;
+package control.metadata;
 
 import control.interfaces.MetadataExtractorManager;
 import model.Metadata;

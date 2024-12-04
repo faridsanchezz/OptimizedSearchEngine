@@ -1,4 +1,4 @@
-package control;
+package control.metadata;
 
 import control.interfaces.MetadataSerializerManager;
 import model.Metadata;

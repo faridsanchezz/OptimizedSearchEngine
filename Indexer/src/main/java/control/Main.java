@@ -1,6 +1,13 @@
 package control;
 
 import control.interfaces.*;
+import control.metadata.MetadataExtractor;
+import control.metadata.MetadataSerializer;
+import control.metadata.MetadataStoreFilePerWord;
+import control.word.WordCleaner;
+import control.word.WordExtractor;
+import control.word.WordSerializerFilePerWord;
+import control.word.WordStoreMultipleDirectories;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +31,7 @@ public class Main {
 
 		WordExtractorManager wordExtractor = new WordExtractor(wordCleaner);
 		WordSerializerManager wordSerializerFilePerWord = new WordSerializerFilePerWord();
-		// WordStoreManager wordStoreFilePerWord = new WordStoreFilePerWord(datamartDirectory, wordSerializerFilePerWord);
+		// WordStoreManager wordStoreOneDirectory = new WordStoreOneDirectory(datamartDirectory, wordSerializerFilePerWord);
 		WordStoreManager wordStoreMultipleDirectories = new WordStoreMultipleDirectories(datamartDirectory, wordSerializerFilePerWord);
 
 		Indexer indexerFilePerWord = new Indexer(wordStoreMultipleDirectories, metadataStoreFilePerWord, metadataExtractor, wordExtractor);

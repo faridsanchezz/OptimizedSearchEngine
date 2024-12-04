@@ -1,4 +1,4 @@
-package control;
+package control.word;
 
 import control.interfaces.WordCleanerManager;
 import control.interfaces.WordExtractorManager;

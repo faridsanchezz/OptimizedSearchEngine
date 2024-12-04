@@ -2,7 +2,7 @@
 package indexerBenchmark;
 
 import control.*;
-import control.WordCleaner;
+import control.word.WordCleaner;
 import control.interfaces.*;
 import model.*;
 import org.openjdk.jmh.annotations.*;
