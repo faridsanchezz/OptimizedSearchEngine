@@ -106,18 +106,54 @@
             justify-content: center;
             margin-top: 20px;
         }
-
+        .filter-section {
+            margin-top: 20px;
+        }
+        .filter-section div {
+            margin-bottom: 15px;
+        }
+        .filter-section input[type="text"], .filter-section input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2><i class="fas fa-book"></i>Search Oracle</h2>
+    <h2><i class="fas fa-book"></i> Search Oracle</h2>
     <div class="search-container">
         <label for="phrase">Enter a word or phrase:</label>
         <input id="phrase" name="phrase" onkeydown="handleKeyPress(event)" placeholder="e.g., adventure, example"
                type="text">
         <button onclick="searchWords()"><i class="fas fa-search"></i> Search</button>
+    </div>
+
+    <div class="filter-section">
+        <h3>Filters</h3>
+        <div>
+            <label for="author">Author:</label>
+            <input id="author" name="author" placeholder="e.g., Mark Twain" type="text">
+        </div>
+        <div>
+            <label>Language:</label>
+            <div>
+                <label><input type="checkbox" name="language" value="English"> English</label>
+                <label><input type="checkbox" name="language" value="Spanish"> Spanish</label>
+                <label><input type="checkbox" name="language" value="French"> French</label>
+            </div>
+        </div>
+        <div>
+            <label for="yearStart">Year Start:</label>
+            <input id="yearStart" name="yearStart" placeholder="e.g., 1900" type="number">
+        </div>
+        <div>
+            <label for="yearEnd">Year End:</label>
+            <input id="yearEnd" name="yearEnd" placeholder="e.g., 2000" type="number">
+        </div>
     </div>
 
     <div id="results"></div>
@@ -132,17 +168,38 @@
 
     async function searchWords() {
         const phrase = document.getElementById('phrase').value.trim();
+        const author = document.getElementById('author').value.trim() || 'All';
+        const yearStart = document.getElementById('yearStart').value.trim() || 'All';
+        const yearEnd = document.getElementById('yearEnd').value.trim() || 'All';
+        const languageCheckboxes = document.querySelectorAll('input[name="language"]:checked');
+        const languages = Array.from(languageCheckboxes).map(cb => cb.value);
+
         const resultsDiv = document.getElementById('results');
         resultsDiv.innerHTML = '';
 
+        // Validación: verificar si al menos un idioma está seleccionado
+        if (languages.length === 0) {
+            resultsDiv.innerHTML = `<p class="error">Please select at least one language.</p>`;
+            return;
+        }
+
+        // Validación: verificar si el campo de frase está vacío
         if (!phrase) {
             resultsDiv.innerHTML = `<p class="error">Please enter a word or phrase to search.</p>`;
             return;
         }
 
         try {
-            console.log("Sending request to backend...");
-            const response = await fetch(`http://localhost:8080/search?phrase=${phrase}`);
+            console.log("Sending request to backend with filters...");
+            const queryParams = new URLSearchParams({
+                phrase,
+                author,
+                yearStart,
+                yearEnd,
+                languages: languages.join(',') // Combina idiomas seleccionados
+            });
+
+            const response = await fetch(`http://localhost:8080/search?${queryParams.toString()}`);
             if (!response.ok) {
                 throw new Error('Failed to search words.');
             }
@@ -204,7 +261,6 @@
             resultsDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
         }
     }
-
 </script>
 
 </body>
